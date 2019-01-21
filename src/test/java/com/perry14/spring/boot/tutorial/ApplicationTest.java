@@ -1,34 +1,43 @@
 package com.perry14.spring.boot.tutorial;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.concurrent.Future;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.perry14.spring.boot.tutorial.async.Task;
 
 /**
  * Unit test for simple App.
  */
-public class ApplicationTest extends TestCase {
-  /**
-   * Create the test case
-   *
-   * @param testName
-   *          name of the test case
-   */
-  public ApplicationTest(String testName) {
-    super(testName);
-  }
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = Application.class)
+public class ApplicationTest {
 
-  /**
-   * @return the suite of tests being tested
-   */
-  public static Test suite() {
-    return new TestSuite(ApplicationTest.class);
-  }
+  @Autowired
+  private Task task;
 
-  /**
-   * Rigourous Test :-)
-   */
-  public void testApp() {
-    assertTrue(true);
+  @Test
+  public void test() throws Exception {
+    long start = System.currentTimeMillis();
+
+    Future<String> task1 = task.doTaskOne();
+    Future<String> task2 = task.doTaskTwo();
+    Future<String> task3 = task.doTaskThree();
+
+    while (true) {
+      if (task1.isDone() && task2.isDone() && task3.isDone()) {
+        // 三个任务都调用完成，退出循环等待
+        break;
+      }
+      Thread.sleep(1000);
+    }
+
+    long end = System.currentTimeMillis();
+
+    System.out.println("任务全部完成，总耗时：" + (end - start) + "毫秒");
   }
 }
