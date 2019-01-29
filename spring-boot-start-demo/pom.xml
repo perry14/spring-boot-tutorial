@@ -9,12 +9,12 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <groupId>com.perry14.spring-boot-tutorial</groupId>
-  <artifactId>spring-boot-tutorial</artifactId>
+  <groupId>com.perry14.spring-boot-start-demo</groupId>
+  <artifactId>spring-boot-start-demo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>spring-boot-tutorial</name>
+  <name>spring-boot-start-demo</name>
   <url>http://maven.apache.org</url>
 
   <properties>
